@@ -1,0 +1,72 @@
+name: bellepoulebeta
+base: core
+version: '5.0__VERSION.1'
+summary: Fencing tournament management software
+description: |
+  Free and open source fencing tournament management software...
+
+grade: devel                                    # must be 'stable' to release into candidate/stable channels
+confinement: devmode                            # use 'strict' once you have the right plugs and slots
+
+apps:
+  bellepoulebeta:
+    command: usr/bin/bellepoulebeta-supervisor
+    environment:
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/bellepoulebeta
+    desktop: usr/share/applications/bellepoulebeta-supervisor.desktop
+  2d:
+    command: usr/bin/bellepoulebeta-marshaller
+    environment:
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/bellepoulebeta
+    desktop: usr/share/applications/bellepoulebeta-marshaller.desktop
+
+parts:
+  bellepoule:
+    source: https://launchpad.net/~betonniere/+archive/ubuntu/bellepoule/+sourcefiles/bellepoulebeta/5.0ubuntu__VERSION~xenial2/bellepoulebeta_5.0ubuntu__VERSION~xenial2.tar.gz
+    plugin: make
+    build-packages:
+      - g++
+      - libgtk2.0-dev
+      - libglib2.0-dev
+      - libxml2-dev
+      - libmicrohttpd-dev
+      - libqrencode-dev
+      - libssl-dev
+      - libjson-glib-dev
+      - libzip-dev
+      - libusb-1.0-0-dev
+      - libwebkitgtk-dev
+      - try:
+        - libcurl4-openssl-dev
+      - else:
+        - libcurl3-dev
+      - try:
+        - libgoocanvas-dev
+    stage-packages:
+      - libgtk2.0-0
+      - libglib2.0-0
+      - libxml2
+      - libqrencode3
+      - libssl1.0.0
+      - lighttpd
+      - libjson-glib-1.0-0
+      - gamin
+      - libzip4
+      - libusb-1.0-0
+      - libwebkitgtk-1.0-0
+      - try:
+        - libcurl4
+      - else:
+        - libcurl3
+      - try:
+        - libmicrohttpd12
+      - else:
+        - libmicrohttpd10
+      - try:
+        - php7.0-cgi
+      - try:
+        - php5-cgi
+      - try:
+        - php-cgi
+      - try:
+        - libgoocanvas3
