@@ -1,12 +1,14 @@
 name: bellepoulebeta
 base: core
-version: '5.0beta53.3'
+version: '5.0beta53.5'
+license: GPL-3.0
+icon: icon.png
 summary: Fencing tournament management software
 description: |
   Free and open source fencing tournament management software...
 
-grade: devel                                    # must be 'stable' to release into candidate/stable channels
-confinement: devmode                            # use 'strict' once you have the right plugs and slots
+grade: devel          # must be 'stable' to release into candidate/stable channels
+confinement: devmode  # use 'strict' once you have the right plugs and slots
 
 apps:
   bellepoulebeta:
@@ -19,6 +21,9 @@ apps:
     environment:
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/bellepoulebeta
     desktop: usr/share/applications/bellepoulebeta-marshaller.desktop
+  backend:
+    command: $SNAP/usr/bin/bellepoulebeta-backend
+    plugs: [raw-usb]
 
 parts:
   desktop-gtk2:
