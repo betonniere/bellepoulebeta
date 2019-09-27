@@ -1,6 +1,6 @@
 name: bellepoulebeta
 base: core
-version: '5.0beta53.5'
+version: '5.0beta57.1'
 license: GPL-3.0
 icon: icon.png
 summary: Fencing tournament management software
@@ -16,13 +16,17 @@ apps:
     environment:
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/bellepoulebeta
     desktop: usr/share/applications/bellepoulebeta-supervisor.desktop
+    plugs:
+      - home
   2d:
     command: desktop-launch $SNAP/usr/bin/bellepoulebeta-marshaller
     environment:
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/bellepoulebeta
     desktop: usr/share/applications/bellepoulebeta-marshaller.desktop
+    plugs:
+      - home
   backend:
-    command: $SNAP/usr/bin/bellepoulebeta-backend
+    command: usr/bin/bellepoulebeta-backend
     plugs: [raw-usb]
 
 parts:
@@ -52,7 +56,7 @@ parts:
       - libibus-1.0-5
 
   bellepoule:
-    source: https://launchpad.net/~betonniere/+archive/ubuntu/bellepoule/+sourcefiles/bellepoulebeta/5.0ubuntubeta53~xenial2/bellepoulebeta_5.0ubuntubeta53~xenial2.tar.gz
+    source: https://launchpad.net/~betonniere/+archive/ubuntu/bellepoule/+sourcefiles/bellepoulebeta/5.0ubuntubeta57~xenial1/bellepoulebeta_5.0ubuntubeta57~xenial1.tar.gz
     after: [desktop-gtk2]
     plugin: make
     build-packages:
@@ -74,8 +78,6 @@ parts:
       - try:
         - libgoocanvas-dev
     stage-packages:
-      - libgtk2.0-0
-      - libglib2.0-0
       - libxml2
       - libqrencode3
       - libssl1.0.0

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import os
 import re
 
@@ -20,17 +21,24 @@ if __name__ == '__main__':
     os.unsetenv ('http_proxy')
     os.unsetenv ('https_proxy')
 
-    with open ('../5.0/sources/BellePoule/application/version.h') as version_file:
+    if len (sys.argv) <= 1:
+        minor = '1'
+    else:
+        minor = sys.argv[1]
+
+    with open ('../../../sources/BellePoule/application/version.h') as version_file:
         for line in version_file:
             if 'VERSION_MATURITY' in line:
                 version = line.split ('"')
 
                 with open ('snapcraft.template', 'r') as template:
                     with open ('snapcraft.yaml', 'w') as yaml:
-                        content = re.sub (r'__VERSION', version[1], template.read ())
+                        content = template.read ()
+                        content = re.sub (r'__VERSION', version[1], content)
+                        content = re.sub (r'__MINOR',   minor     , content)
                         yaml.write (content)
 
                 break
 
     print 'sudo snapcraft --debug'
-    print 'sudo snap install --devmode bellepoulebeta_5.0' + version[1] + '_amd64.snap'
+    print 'sudo snap install --devmode bellepoulebeta_5.0' + version[1] + '.' + minor + '_amd64.snap'
